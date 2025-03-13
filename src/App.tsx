@@ -1,15 +1,20 @@
-import { Box, Typography } from "@mui/material";
-import Container from "@mui/material/Container";
-
+import { Box } from "@mui/material";
+import { Route, Routes } from "react-router-dom";
+import "./App.css";
+import Footer from "./components/Footer";
+import Navbar from "./components/Navbar";
+import ExerciseDetail from "./pages/ExerciseDetail";
+import Home from "./pages/Home";
 function App() {
   return (
-    <Container maxWidth="sm">
-      <Box sx={{ my: 4 }}>
-        <Typography variant="h4" component="h1" sx={{ mb: 2 }}>
-          Material UI Vite.js example in TypeScript
-        </Typography>
-      </Box>
-    </Container>
+    <Box width="400px" sx={{ width: { xl: "1488px" } }} m="auto">
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/exercise/:id" element={<ExerciseDetail />} />
+      </Routes>
+      <Footer />
+    </Box>
   );
 }
 
