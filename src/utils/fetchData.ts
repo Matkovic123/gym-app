@@ -5,8 +5,8 @@ export type Exercise = {
   id: string;
   name: string;
   target: string;
-  secondaryMuscles: [string];
-  instructions: [string];
+  secondaryMuscles: string[];
+  instructions: string[];
 };
 
 export const exerciseOptions = {
@@ -17,7 +17,7 @@ export const exerciseOptions = {
   },
 };
 
-export const fetchData = async (url: string, options: object): Promise<[Exercise]> => {
+export const fetchData = async (url: string, options: object) => {
   const res = await fetch(url, options);
   const data = await res.json();
   return data;
