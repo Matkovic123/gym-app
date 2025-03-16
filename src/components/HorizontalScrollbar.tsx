@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import BodyPart from "./BodyPart";
 import LeftArrow from "./../assets/icons/left-arrow.png";
 import RightArrow from "./../assets/icons/right-arrow.png";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 type Props = {
   bodyParts: string[];
@@ -15,27 +15,38 @@ const HorizontalScrollbar = ({
   selectedBodyPart,
   setSelectedBodyPart,
 }: Props) => {
+  const left = useRef(0);
   useEffect(() => {
-    let left = 0;
-    document.querySelector("#left")!.addEventListener("click", function () {
-      left = left < 270 ? 0 : left - 270;
-      document.querySelector("#scrollable")!.scroll({
-        left: left,
-        top: 0,
-        behavior: "smooth",
-      });
-    });
-    document.querySelector("#right")!.addEventListener("click", function () {
-      left += 270;
-      console.log(left);
-      document.querySelector("#scrollable")!.scroll({
-        left: left,
-        top: 0,
-        behavior: "smooth",
-      });
-    });
-
+    document.querySelector("#left")!.addEventListener("click", handleLeftClick);
+    document
+      .querySelector("#right")!
+      .addEventListener("click", handleRightClick);
+    return () => {
+      document
+        .querySelector("#left")!
+        .removeEventListener("click", handleLeftClick);
+      document
+        .querySelector("#right")!
+        .removeEventListener("click", handleRightClick);
+    };
   }, []);
+
+  const scroll = (amount: number) => {
+    console.log("scroll by: " + amount);
+    if (amount > 0) {
+      left.current += amount;
+    } else {
+      left.current = left.current < 270 ? 0 : left.current - 270;
+    }
+    document.querySelector("#scrollable")!.scroll({
+      left: left.current,
+      top: 0,
+      behavior: "smooth",
+    });
+    console.log("left: " + left.current);
+  };
+  const handleLeftClick = () => scroll(-270);
+  const handleRightClick = () => scroll(270);
   return (
     <Box display="flex" alignItems="center" gap={2}>
       <Typography id="left" sx={{ cursor: "pointer" }}>
