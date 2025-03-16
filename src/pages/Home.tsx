@@ -6,7 +6,7 @@ import { useState } from "react";
 import { Exercise } from "../utils/fetchData";
 
 const Home = () => {
-  const [bodyPart, setBodyPart] = useState<string>("all");
+  const [selectedBodyPart, setSelectedBodyPart] = useState<string>("all");
   const [exercises, setExercises] = useState<Exercise[]>([]);
 
   return (
@@ -14,13 +14,13 @@ const Home = () => {
       <HeroBanner />
       <SearchExercises  // TODO: CONVERT THIS INTO CONTEXT
         setExercises={setExercises}
-        bodyPart={bodyPart}
-        setBodyPart={setBodyPart}
+        selectedBodyPart={selectedBodyPart}
+        setSelectedBodyPart={setSelectedBodyPart}
       />
       <Exercises
         setExercises={setExercises}
-        bodyPart={bodyPart}
-        setBodyPart={setBodyPart}
+        selectedBodyPart={selectedBodyPart}
+        setSelectedBodyPart={setSelectedBodyPart}
       />
     </Box>
   );

@@ -3,7 +3,13 @@ import { Typography, Box, Button, Stack, TextField } from "@mui/material";
 import { fetchData, exerciseOptions, Exercise } from "../utils/fetchData";
 import HorizontalScrollbar from "./HorizontalScrollbar";
 
-const SearchExercises = ({setExercises, bodyPart, setBodyPart}) => {
+type Props = {
+  setExercises: (param1: Exercise[]) => void;
+  selectedBodyPart: string;
+  setSelectedBodyPart: (param: string) => void;
+};
+
+const SearchExercises = ({ setExercises, selectedBodyPart, setSelectedBodyPart }: Props) => {
   const [search, setSearch] = useState("");
   const [bodyParts, setBodyParts] = useState<string[]>([]);
 
@@ -80,7 +86,11 @@ const SearchExercises = ({setExercises, bodyPart, setBodyPart}) => {
         </Button>
       </Box>
       <Box sx={{ position: "relative", width: "100%", padding: "20px" }}>
-        <HorizontalScrollbar data={bodyParts} bodyPart={bodyPart} setBodyPart={setBodyPart} />
+        <HorizontalScrollbar
+          bodyParts={bodyParts}
+          selectedBodyPart={selectedBodyPart}
+          setSelectedBodyPart={setSelectedBodyPart}
+        />
       </Box>
     </Stack>
   );

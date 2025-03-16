@@ -2,7 +2,17 @@ import { Stack, Typography } from "@mui/material";
 
 import Icon from "../assets/icons/gym.png";
 
-const BodyPart = ({ item, setBodyPart, bodyPart }) => {
+type Props = {
+  bodyPart: string;
+  setSelectedBodyPart: (param1: string) => void;
+  selectedBodyPart: string;
+};
+
+const BodyPart = ({
+  bodyPart,
+  setSelectedBodyPart,
+  selectedBodyPart,
+}: Props) => {
   return (
     <Stack
       typography="button"
@@ -10,13 +20,17 @@ const BodyPart = ({ item, setBodyPart, bodyPart }) => {
       justifyContent="center"
       className="bodyPart-card"
       sx={{
-        borderTop: bodyPart === item ? "4px solid #ff2625" : "",
+        borderTop: selectedBodyPart === bodyPart ? "4px solid #ff2625" : "",
         backgroundColor: "#fff",
         borderBottomLeftRadius: "20px",
         width: "270px",
         height: "280px",
         cursor: "pointer",
         gap: "47px",
+      }}
+      onClick={() => {
+        setSelectedBodyPart(bodyPart);
+        window.scrollTo({ top: 1800, left: 100, behavior: "smooth" });
       }}
     >
       <img src={Icon} alt="Dumbell" style={{ width: "40px", height: "40px" }} />
@@ -26,7 +40,7 @@ const BodyPart = ({ item, setBodyPart, bodyPart }) => {
         color="#3a1212"
         textTransform="capitalize"
       >
-        {item}
+        {bodyPart}
       </Typography>
     </Stack>
   );

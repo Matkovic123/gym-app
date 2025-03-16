@@ -2,23 +2,43 @@ import { Box, Typography } from "@mui/material";
 import BodyPart from "./BodyPart";
 import LeftArrow from "./../assets/icons/left-arrow.png";
 import RightArrow from "./../assets/icons/right-arrow.png";
+import { useEffect } from "react";
 
-const HorizontalScrollbar = ({ data, bodyPart, setBodyPart }) => {
-//   document.querySelector('#')!.addEventListener('click', function () { -- TODO for a smooth scroll
-//     this.scroll({
-//         left: 0,
-//         top: 0,
-//         behavior: 'smooth'
-//     })
-// });
+type Props = {
+  bodyParts: string[];
+  selectedBodyPart: string;
+  setSelectedBodyPart: (param: string) => void;
+};
+
+const HorizontalScrollbar = ({
+  bodyParts,
+  selectedBodyPart,
+  setSelectedBodyPart,
+}: Props) => {
+  useEffect(() => {
+    let left = 0;
+    document.querySelector("#left")!.addEventListener("click", function () {
+      left = left < 270 ? 0 : left - 270;
+      document.querySelector("#scrollable")!.scroll({
+        left: left,
+        top: 0,
+        behavior: "smooth",
+      });
+    });
+    document.querySelector("#right")!.addEventListener("click", function () {
+      left += 270;
+      console.log(left);
+      document.querySelector("#scrollable")!.scroll({
+        left: left,
+        top: 0,
+        behavior: "smooth",
+      });
+    });
+
+  }, []);
   return (
     <Box display="flex" alignItems="center" gap={2}>
-      <Typography
-        sx={{ cursor: "pointer" }}
-        onClick={() =>
-          (document.getElementById("scrollable")!.scrollLeft -= 270)
-        }
-      >
+      <Typography id="left" sx={{ cursor: "pointer" }}>
         <img src={LeftArrow} alt="left" />
       </Typography>
       <Box
@@ -28,24 +48,19 @@ const HorizontalScrollbar = ({ data, bodyPart, setBodyPart }) => {
         whiteSpace="nowrap"
         width="100%"
       >
-        {data.map((item) => {
+        {bodyParts.map((bodyPartItem) => {
           return (
-            <Box key={item.id || item} title={item.id || item} m="0 40px">
+            <Box key={bodyPartItem} title={bodyPartItem} m="0 40px">
               <BodyPart
-                item={item}
-                bodyPart={bodyPart}
-                setBodyPart={setBodyPart}
+                bodyPart={bodyPartItem}
+                selectedBodyPart={selectedBodyPart}
+                setSelectedBodyPart={setSelectedBodyPart}
               />
             </Box>
           );
         })}
       </Box>
-      <Typography
-        sx={{ cursor: "pointer" }}
-        onClick={() =>
-          (document.getElementById("scrollable")!.scrollLeft += 270)
-        }
-      >
+      <Typography id="right" sx={{ cursor: "pointer" }}>
         {" "}
         <img src={RightArrow} alt="right" />
       </Typography>
