@@ -4,12 +4,19 @@ import LeftArrow from "./../assets/icons/left-arrow.png";
 import RightArrow from "./../assets/icons/right-arrow.png";
 
 const HorizontalScrollbar = ({ data, bodyPart, setBodyPart }) => {
+//   document.querySelector('#')!.addEventListener('click', function () {
+//     this.scroll({
+//         left: 0,
+//         top: 0,
+//         behavior: 'smooth'
+//     })
+// });
   return (
-    <Box display="flex" alignItems="center">
+    <Box display="flex" alignItems="center" gap={2}>
       <Typography
         sx={{ cursor: "pointer" }}
         onClick={() =>
-          (document.getElementById("scrollable")!.scrollLeft -= 200)
+          (document.getElementById("scrollable")!.scrollLeft -= 270)
         }
       >
         <img src={LeftArrow} alt="left" />
@@ -36,7 +43,7 @@ const HorizontalScrollbar = ({ data, bodyPart, setBodyPart }) => {
       <Typography
         sx={{ cursor: "pointer" }}
         onClick={() =>
-          (document.getElementById("scrollable")!.scrollLeft += 200)
+          (document.getElementById("scrollable")!.scrollLeft += 270)
         }
       >
         {" "}
