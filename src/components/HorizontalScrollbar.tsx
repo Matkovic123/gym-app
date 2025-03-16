@@ -4,7 +4,7 @@ import LeftArrow from "./../assets/icons/left-arrow.png";
 import RightArrow from "./../assets/icons/right-arrow.png";
 
 const HorizontalScrollbar = ({ data, bodyPart, setBodyPart }) => {
-//   document.querySelector('#')!.addEventListener('click', function () {
+//   document.querySelector('#')!.addEventListener('click', function () { -- TODO for a smooth scroll
 //     this.scroll({
 //         left: 0,
 //         top: 0,
