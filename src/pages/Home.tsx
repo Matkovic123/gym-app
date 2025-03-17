@@ -4,24 +4,21 @@ import HeroBanner from "../components/HeroBanner";
 import SearchExercises from "../components/SearchExercises";
 import { useState } from "react";
 import { Exercise } from "../utils/fetchData";
+import { ExercisesContext, SelectedBodyPartContext } from "../utils/contexts";
 
 const Home = () => {
-  const [selectedBodyPart, setSelectedBodyPart] = useState<string>("all");
-  const [exercises, setExercises] = useState<Exercise[]>([]);
+  const selectedBodyPartHook = useState<string>("all");
+  const exercisesHook = useState<Exercise[]>([]);
 
   return (
     <Box>
       <HeroBanner />
-      <SearchExercises  // TODO: CONVERT THIS INTO CONTEXT
-        setExercises={setExercises}
-        selectedBodyPart={selectedBodyPart}
-        setSelectedBodyPart={setSelectedBodyPart}
-      />
-      <Exercises
-        exercises={exercises}
-        setExercises={setExercises}
-        selectedBodyPart={selectedBodyPart}
-      />
+      <ExercisesContext.Provider value={exercisesHook}>
+        <SelectedBodyPartContext.Provider value={selectedBodyPartHook}>
+          <SearchExercises/>
+          <Exercises/>
+        </SelectedBodyPartContext.Provider>
+      </ExercisesContext.Provider>
     </Box>
   );
 };

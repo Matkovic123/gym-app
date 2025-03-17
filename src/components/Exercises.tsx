@@ -1,15 +1,12 @@
-import { Exercise } from "../utils/fetchData";
-import { ChangeEvent, useEffect, useState } from "react";
 import { Box, Pagination, Stack, Typography } from "@mui/material";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
+import { ExercisesContext } from "../utils/contexts";
 import { exerciseOptions, fetchData } from "../utils/fetchData";
 import ExerciseCard from "./ExerciseCard";
 
-type Props = {
-  exercises: Exercise[];
-  setExercises: (param1: Exercise[]) => void;
-  selectedBodyPart: string;
-};
-const Exercises = ({ exercises, setExercises, selectedBodyPart }: Props) => {
+const Exercises = () => {
+  const [exercises, setExercises] = useContext(ExercisesContext);
+
   useEffect(() => {
     const getExercisesData = async () => {
       const data = await fetchData(
@@ -26,7 +23,10 @@ const Exercises = ({ exercises, setExercises, selectedBodyPart }: Props) => {
 
   const indexOfLastExercise = currentPage * exercisesPerPage;
   const indexOfFirstExercise = indexOfLastExercise - exercisesPerPage;
-  const currentExercises = exercises.slice(indexOfFirstExercise, indexOfLastExercise)
+  const currentExercises = exercises.slice(
+    indexOfFirstExercise,
+    indexOfLastExercise,
+  );
   const paginate = (e: ChangeEvent<unknown>, value: number) => {
     setCurrentPage(value);
     window.scrollTo({ top: 1800, behavior: "smooth" });

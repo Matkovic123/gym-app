@@ -1,19 +1,14 @@
-import { useState, useEffect, FormEvent } from "react";
-import { Typography, Box, Button, Stack, TextField } from "@mui/material";
-import { fetchData, exerciseOptions, Exercise } from "../utils/fetchData";
+import { Box, Button, Stack, TextField, Typography } from "@mui/material";
+import { FormEvent, useContext, useEffect, useState } from "react";
+import { ExercisesContext, SelectedBodyPartContext } from "../utils/contexts";
+import { Exercise, exerciseOptions, fetchData } from "../utils/fetchData";
 import HorizontalScrollbar from "./HorizontalScrollbar";
 
-type Props = {
-  setExercises: (param1: Exercise[]) => void;
-  selectedBodyPart: string;
-  setSelectedBodyPart: (param: string) => void;
-};
-
-const SearchExercises = ({
-  setExercises,
-  selectedBodyPart,
-  setSelectedBodyPart,
-}: Props) => {
+const SearchExercises = () => {
+  const [, setExercises] = useContext(ExercisesContext);
+  const [selectedBodyPart, setSelectedBodyPart] = useContext(
+    SelectedBodyPartContext,
+  );
   const [search, setSearch] = useState("");
   const [bodyParts, setBodyParts] = useState<string[]>([]);
 
