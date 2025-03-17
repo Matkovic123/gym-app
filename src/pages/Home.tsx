@@ -18,9 +18,9 @@ const Home = () => {
         setSelectedBodyPart={setSelectedBodyPart}
       />
       <Exercises
+        exercises={exercises}
         setExercises={setExercises}
         selectedBodyPart={selectedBodyPart}
-        setSelectedBodyPart={setSelectedBodyPart}
       />
     </Box>
   );

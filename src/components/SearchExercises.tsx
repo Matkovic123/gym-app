@@ -32,7 +32,7 @@ const SearchExercises = ({
     event.preventDefault();
     if (search) {
       const exercisesData = await fetchData(
-        "https://exercisedb.p.rapidapi.com/exercises",
+        "https://exercisedb.p.rapidapi.com/exercises?limit=2000&offset=0",
         exerciseOptions,
       );
       const searchedExercises = exercisesData.filter((exercise: Exercise) => {

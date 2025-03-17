@@ -32,7 +32,6 @@ const HorizontalScrollbar = ({
   }, []);
 
   const scroll = (amount: number) => {
-    console.log("scroll by: " + amount);
     if (amount > 0) {
       left.current += amount;
     } else {
@@ -43,7 +42,6 @@ const HorizontalScrollbar = ({
       top: 0,
       behavior: "smooth",
     });
-    console.log("left: " + left.current);
   };
   const handleLeftClick = () => scroll(-270);
   const handleRightClick = () => scroll(270);
@@ -58,6 +56,7 @@ const HorizontalScrollbar = ({
         overflow="auto"
         whiteSpace="nowrap"
         width="100%"
+        sx={{ overflowY: "hidden" }}
       >
         {bodyParts.map((bodyPartItem) => {
           return (
