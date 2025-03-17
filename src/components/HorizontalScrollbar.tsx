@@ -15,19 +15,18 @@ const HorizontalScrollbar = ({
   selectedBodyPart,
   setSelectedBodyPart,
 }: Props) => {
+  const leftArrowElement = useRef<Element | null>(null);
+  const rightArrowElement = useRef<Element | null>(null);
   const left = useRef(0);
   useEffect(() => {
-    document.querySelector("#left")!.addEventListener("click", handleLeftClick);
-    document
-      .querySelector("#right")!
-      .addEventListener("click", handleRightClick);
+    leftArrowElement.current = document.querySelector("#left");
+    rightArrowElement.current = document.querySelector("#right");
+
+    leftArrowElement.current!.addEventListener("click", handleLeftClick);
+    rightArrowElement.current!.addEventListener("click", handleRightClick);
     return () => {
-      document
-        .querySelector("#left")!
-        .removeEventListener("click", handleLeftClick);
-      document
-        .querySelector("#right")!
-        .removeEventListener("click", handleRightClick);
+      leftArrowElement.current!.removeEventListener("click", handleLeftClick);
+      rightArrowElement.current!.removeEventListener("click", handleRightClick);
     };
   }, []);
 
