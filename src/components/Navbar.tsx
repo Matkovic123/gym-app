@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Stack } from "@mui/material";
 import Logo from "../assets/images/Logo.png";
 import AnchorLink from "react-anchor-link-smooth-scroll";
@@ -38,12 +38,16 @@ const Navbar = () => {
           {" "}
           Home
         </Link>
-        <AnchorLink
-          href="#exercises"
-          style={{ textDecoration: "none", color: "#3A1212" }}
-        >
-          Exercises
-        </AnchorLink>
+        {useLocation().pathname === "/" ? (
+          <AnchorLink
+            href="#exercises"
+            style={{ textDecoration: "none", color: "#3A1212" }}
+          >
+            Exercises
+          </AnchorLink>
+        ) : (
+          ""
+        )}
       </Stack>
     </Stack>
   );
