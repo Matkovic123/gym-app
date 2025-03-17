@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, FormEvent } from "react";
 import { Typography, Box, Button, Stack, TextField } from "@mui/material";
 import { fetchData, exerciseOptions, Exercise } from "../utils/fetchData";
 import HorizontalScrollbar from "./HorizontalScrollbar";
@@ -9,7 +9,11 @@ type Props = {
   setSelectedBodyPart: (param: string) => void;
 };
 
-const SearchExercises = ({ setExercises, selectedBodyPart, setSelectedBodyPart }: Props) => {
+const SearchExercises = ({
+  setExercises,
+  selectedBodyPart,
+  setSelectedBodyPart,
+}: Props) => {
   const [search, setSearch] = useState("");
   const [bodyParts, setBodyParts] = useState<string[]>([]);
 
@@ -24,7 +28,8 @@ const SearchExercises = ({ setExercises, selectedBodyPart, setSelectedBodyPart }
     fetchExercisesData();
   }, []);
 
-  const handleSearch = async () => {
+  const handleSearch = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     if (search) {
       const exercisesData = await fetchData(
         "https://exercisedb.p.rapidapi.com/exercises",
@@ -55,35 +60,37 @@ const SearchExercises = ({ setExercises, selectedBodyPart, setSelectedBodyPart }
         Awesome Exercises You <br /> Should Know
       </Typography>
       <Box position="relative" mb="72px">
-        <TextField
-          // height='76px' TODO: not working
-          sx={{
-            input: { fontWeight: "700", border: "none", borderRadius: "4px" },
-            width: { lg: "800px", xs: " 350px" },
-            backgroundColor: "#fff",
-            borderRadius: "40px",
-          }}
-          value={search}
-          onChange={(e) => setSearch(e.target.value.toLowerCase())}
-          placeholder="Search Exercises"
-          type="text"
-        />
-        <Button
-          onClick={handleSearch}
-          className="search-btn"
-          sx={{
-            bgcolor: "#ff2625",
-            color: "#fff",
-            textTransform: "none",
-            width: { lg: "175px", xs: "80px" },
-            fontSize: { lg: "20px", xs: "14px" },
-            height: "56px",
-            position: "absolute",
-            right: 0,
-          }}
-        >
-          Search
-        </Button>
+        <form onSubmit={handleSearch}>
+          <TextField
+            // height='76px' TODO: not working
+            sx={{
+              input: { fontWeight: "700", border: "none", borderRadius: "4px" },
+              width: { lg: "800px", xs: " 350px" },
+              backgroundColor: "#fff",
+              borderRadius: "40px",
+            }}
+            value={search}
+            onChange={(e) => setSearch(e.target.value.toLowerCase())}
+            placeholder="Search Exercises"
+            type="text"
+          />
+          <Button
+            type="submit"
+            className="search-btn"
+            sx={{
+              bgcolor: "#ff2625",
+              color: "#fff",
+              textTransform: "none",
+              width: { lg: "175px", xs: "80px" },
+              fontSize: { lg: "20px", xs: "14px" },
+              height: "56px",
+              position: "absolute",
+              right: 0,
+            }}
+          >
+            Search
+          </Button>
+        </form>
       </Box>
       <Box sx={{ position: "relative", width: "100%", padding: "20px" }}>
         <HorizontalScrollbar
