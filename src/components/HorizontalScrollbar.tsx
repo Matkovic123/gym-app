@@ -57,9 +57,9 @@ const HorizontalScrollbar = ({
         width="100%"
         sx={{ overflowY: "hidden" }}
       >
-        {bodyParts.map((bodyPartItem) => {
+        {bodyParts.map((bodyPartItem, index) => {
           return (
-            <Box key={bodyPartItem} title={bodyPartItem} m="0 40px">
+            <Box key={bodyPartItem+index} title={bodyPartItem} m="0 40px">
               <BodyPart
                 bodyPart={bodyPartItem}
                 selectedBodyPart={selectedBodyPart}

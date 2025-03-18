@@ -57,7 +57,6 @@ const SearchExercises = () => {
       <Box position="relative" mb="72px">
         <form onSubmit={handleSearch}>
           <TextField
-            // height='76px' TODO: not working
             sx={{
               input: { fontWeight: "700", border: "none", borderRadius: "4px" },
               width: { lg: "800px", xs: " 350px" },
