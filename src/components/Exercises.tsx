@@ -16,7 +16,7 @@ const Exercises = () => {
       setExercises(data);
     };
     getExercisesData();
-  }, []);
+  }, [setExercises]);
 
   const exercisesPerPage = 9;
   const [currentPage, setCurrentPage] = useState(1);
@@ -27,7 +27,7 @@ const Exercises = () => {
     indexOfFirstExercise,
     indexOfLastExercise,
   );
-  const paginate = (e: ChangeEvent<unknown>, value: number) => {
+  const paginate = (_: ChangeEvent<unknown>, value: number) => {
     setCurrentPage(value);
     window.scrollTo({ top: 1800, behavior: "smooth" });
   };

@@ -3,6 +3,7 @@ import { FormEvent, useContext, useEffect, useState } from "react";
 import { ExercisesContext, SelectedBodyPartContext } from "../utils/contexts";
 import { Exercise, exerciseOptions, fetchData } from "../utils/fetchData";
 import HorizontalScrollbar from "./HorizontalScrollbar";
+import Loading from "./Loading";
 
 const SearchExercises = () => {
   const [, setExercises] = useContext(ExercisesContext);
@@ -11,6 +12,7 @@ const SearchExercises = () => {
   );
   const [search, setSearch] = useState("");
   const [bodyParts, setBodyParts] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchExercisesData = async () => {
@@ -19,12 +21,35 @@ const SearchExercises = () => {
         exerciseOptions,
       );
       setBodyParts(["all", ...bodyPartsData]);
+      setIsLoading(false);
     };
     fetchExercisesData();
   }, []);
 
+  useEffect(() => {
+    const fetchExercisesForBodyPart = async () => {
+      const exercisesData = await fetchData(
+        "https://exercisedb.p.rapidapi.com/exercises?limit=2000&offset=0",
+        exerciseOptions,
+      );
+      const searchedExercises = exercisesData.filter((exercise: Exercise) => {
+        return (
+          exercise.name.toLowerCase().includes(selectedBodyPart) ||
+          exercise.target.toLowerCase().includes(selectedBodyPart) ||
+          exercise.equipment.toLowerCase().includes(selectedBodyPart) ||
+          exercise.bodyPart.toLowerCase().includes(selectedBodyPart)
+        );
+      });
+      setSearch("");
+      setExercises(searchedExercises);
+      setIsLoading(false);
+    };
+    fetchExercisesForBodyPart();
+  }, [selectedBodyPart]);
+
   const handleSearch = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsLoading(true);
     if (search) {
       const exercisesData = await fetchData(
         "https://exercisedb.p.rapidapi.com/exercises?limit=2000&offset=0",
@@ -40,8 +65,12 @@ const SearchExercises = () => {
       });
       setSearch("");
       setExercises(searchedExercises);
+      setIsLoading(false);
     }
   };
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <Stack alignItems="center" mt="37px" justifyContent="center" p="20px">
       <Typography
