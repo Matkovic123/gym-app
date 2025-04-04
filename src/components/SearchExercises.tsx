@@ -1,15 +1,13 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 import { FormEvent, useContext, useEffect, useState } from "react";
-import { ExercisesContext, SelectedBodyPartContext } from "../utils/contexts";
+import { ExercisesContext } from "../utils/contexts";
 import { Exercise, exerciseOptions, fetchData } from "../utils/fetchData";
 import HorizontalScrollbar from "./HorizontalScrollbar";
 import Loading from "./Loading";
 
 const SearchExercises = () => {
   const [, setExercises] = useContext(ExercisesContext);
-  const [selectedBodyPart, setSelectedBodyPart] = useContext(
-    SelectedBodyPartContext,
-  );
   const [search, setSearch] = useState("");
   const [bodyParts, setBodyParts] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -25,27 +23,6 @@ const SearchExercises = () => {
     };
     fetchExercisesData();
   }, []);
-
-  useEffect(() => {
-    const fetchExercisesForBodyPart = async () => {
-      const exercisesData = await fetchData(
-        "https://exercisedb.p.rapidapi.com/exercises?limit=2000&offset=0",
-        exerciseOptions,
-      );
-      const searchedExercises = exercisesData.filter((exercise: Exercise) => {
-        return (
-          exercise.name.toLowerCase().includes(selectedBodyPart) ||
-          exercise.target.toLowerCase().includes(selectedBodyPart) ||
-          exercise.equipment.toLowerCase().includes(selectedBodyPart) ||
-          exercise.bodyPart.toLowerCase().includes(selectedBodyPart)
-        );
-      });
-      setSearch("");
-      setExercises(searchedExercises);
-      setIsLoading(false);
-    };
-    fetchExercisesForBodyPart();
-  }, [selectedBodyPart]);
 
   const handleSearch = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -116,11 +93,7 @@ const SearchExercises = () => {
         </form>
       </Box>
       <Box sx={{ position: "relative", width: "100%", padding: "20px" }}>
-        <HorizontalScrollbar
-          bodyParts={bodyParts}
-          selectedBodyPart={selectedBodyPart}
-          setSelectedBodyPart={setSelectedBodyPart}
-        />
+        <HorizontalScrollbar bodyParts={bodyParts} />
       </Box>
     </Stack>
   );

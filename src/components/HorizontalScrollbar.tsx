@@ -6,15 +6,9 @@ import { useEffect, useRef } from "react";
 
 type Props = {
   bodyParts: string[];
-  selectedBodyPart: string;
-  setSelectedBodyPart: (param: string) => void;
 };
 
-const HorizontalScrollbar = ({
-  bodyParts,
-  selectedBodyPart,
-  setSelectedBodyPart,
-}: Props) => {
+const HorizontalScrollbar = ({ bodyParts }: Props) => {
   const leftArrowElement = useRef<Element | null>(null);
   const rightArrowElement = useRef<Element | null>(null);
   const left = useRef(0);
@@ -59,12 +53,8 @@ const HorizontalScrollbar = ({
       >
         {bodyParts.map((bodyPartItem, index) => {
           return (
-            <Box key={bodyPartItem+index} title={bodyPartItem} m="0 40px">
-              <BodyPart
-                bodyPart={bodyPartItem}
-                selectedBodyPart={selectedBodyPart}
-                setSelectedBodyPart={setSelectedBodyPart}
-              />
+            <Box key={bodyPartItem + index} title={bodyPartItem} m="0 40px">
+              <BodyPart bodyPart={bodyPartItem} />
             </Box>
           );
         })}

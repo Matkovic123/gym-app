@@ -1,18 +1,19 @@
 import { Stack, Typography } from "@mui/material";
 
 import Icon from "../assets/icons/gym.png";
+import { useContext } from "react";
+import { SelectedBodyPartContext } from "../utils/contexts";
 
 type Props = {
   bodyPart: string;
-  setSelectedBodyPart: (param1: string) => void;
-  selectedBodyPart: string;
 };
 
 const BodyPart = ({
-  bodyPart,
-  setSelectedBodyPart,
-  selectedBodyPart,
+  bodyPart
 }: Props) => {
+  const [selectedBodyPart, setSelectedBodyPart] = useContext(
+    SelectedBodyPartContext,
+  );
   return (
     <Stack
       typography="button"
@@ -30,7 +31,6 @@ const BodyPart = ({
       }}
       onClick={() => {
         setSelectedBodyPart(bodyPart);
-        window.scrollTo({ top: 1800, left: 100, behavior: "smooth" });
       }}
     >
       <img src={Icon} alt="Dumbell" style={{ width: "40px", height: "40px" }} />
